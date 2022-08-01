@@ -30,14 +30,17 @@ Here are two versions of a genome you can try this script on: [CP001172.1](https
 
 Download them in GenBank format and then run the script like this:
 ```
-compare_annotations.py CP001172.1.gb CP001172.2.gb > results
+./compare_annotations.py CP001172.1.gb CP001172.2.gb > results
+./summarize results
 ```
 
 
 
 ## Output
 
-This script outputs a gene-by-gene analysis.
+### Gene-by-gene results
+
+The main script outputs a gene-by-gene analysis.
 
 When two CDSs are identical, you'll see something like this:
 ```
@@ -62,29 +65,9 @@ In new but not in old: ABBFA_00087|pgpA
   pgpA: Phosphatidylglycerophosphatase A (103971-104487 -, 516 bp)
 ```
 
+### Summarized results
 
-
-## Summarising output
-
-Here are a few lines of Bash to generate a summary file:
-```bash
-printf "Features in old assembly: %5s\n" $(grep "Features in old assembly" results | grep -oP "\d+") >> summary
-printf "Features in new assembly: %5s\n" $(grep "Features in new assembly" results | grep -oP "\d+") >> summary
-printf "\n" >> summary
-printf "Exact match:              %5s\n" $(grep -c "Exact match" results) >> summary
-printf "\n" >> summary
-printf "Inexact match:            %5s\n" $(grep -c "Inexact match" results) >> summary
-printf "  same length:            %5s\n" $(grep -c "same length" results) >> summary
-printf "  new seq longer:         %5s\n" $(grep -c "new seq longer" results) >> summary
-printf "  old seq longer:         %5s\n" $(grep -c "old seq longer" results) >> summary
-printf "\n" >> summary
-printf "In new but not in old:    %5s\n" $(grep -c "In new but not in old" results) >> summary
-printf "In old but not in new:    %5s\n" $(grep -c "In old but not in new" results) >> summary
-printf "\n" >> summary
-printf "No longer hypothetical:   %5s\n" $(grep -c "no longer hypothetical" results) >> summary
-printf "Still hypothetical:       %5s\n" $(grep -c "still hypothetical" results) >> summary
-printf "Became hypothetical:      %5s\n" $(grep -c "became hypothetical" results) >> summary
-```
+The included script `summarize` generates a summary of your comparison results.
 
 The result of which should look something like this:
 ```
@@ -99,11 +82,16 @@ Inexact match:              354
   old seq longer:            65
 
 In new but not in old:      136
+    of these,   136 are named genes
 In old but not in new:      167
+    of these,     1 are named genes
 
-No longer hypothetical:     239
-Still hypothetical:         638
+No longer hypothetical:     242
+Still hypothetical:         635
 Became hypothetical:         84
+
+Unnamed in old, named in new:   950
+Named in old, unnamed in new:     0
 ```
 
 

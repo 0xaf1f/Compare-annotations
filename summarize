@@ -1,0 +1,28 @@
+#!/bin/bash
+results="$1"
+printf "Features in old assembly: %5s\n" $(grep "Features in old assembly" $results | grep -oP "\d+")
+printf "Features in new assembly: %5s\n" $(grep "Features in new assembly" $results | grep -oP "\d+")
+printf "\n"
+printf "Exact match:              %5s\n" $(grep -c "Exact match" $results)
+printf "\n"
+printf "Inexact match:            %5s\n" $(grep -c "Inexact match" $results)
+printf "  same length:            %5s\n" $(grep -c "same length" $results)
+printf "  new seq longer:         %5s\n" $(grep -c "new seq longer" $results)
+printf "  old seq longer:         %5s\n" $(grep -c "old seq longer" $results)
+printf "\n"
+printf "In new but not in old:    %5s\n" $(grep -c "In new but not in old" $results)
+printf "    of these, %5s are named genes\n" $(grep "In new but not in old" $results | grep -vc '|ORF')
+printf "In old but not in new:    %5s\n" $(grep -c "In old but not in new" $results)
+printf "    of these, %5s are named genes\n" $(grep "In old but not in new" $results | grep -c '|')
+printf "\n"
+printf "No longer hypothetical:   %5s\n" $(grep -c "no longer hypothetical" $results)
+printf "Still hypothetical:       %5s\n" $(grep -c "still hypothetical" $results)
+printf "Became hypothetical:      %5s\n" $(grep -c "became hypothetical" $results)
+printf "\n"
+printf "Unnamed in old, named in new: %5s\n" $(grep "'' vs " $results | grep -vc "'ORF")
+printf "Named in old, unnamed in new: %5s\n" $(grep " vs 'ORF" $results | grep -vc "'' vs ")
+printf "\n"
+
+printf "\n"printf "Unnamed in old, named in new: %5s\n" $(grep "'' vs " $results | grep -vc "'ORF")
+
+
