@@ -43,23 +43,23 @@ When two CDSs are identical, you'll see something like this:
 ```
 Exact match
   old: Anhydro-N-acetylmuramic acid kinase(AnhMurNAc kinase) (14970-16098 -, 1128 bp)
-  new: Anhydro-N-acetylmuramic acid kinase (14970-16098 -, 1128 bp)
+  new: anmK: Anhydro-N-acetylmuramic acid kinase (14970-16098 -, 1128 bp)
 ```
 
 Or if the CDSs are similar (i.e. the same gene) but not identical, you'll see something like this:
 ```
 Inexact match (98.54% ID, old seq longer)
-  old: tyrosyl-tRNA synthetase (16159-17392 +, 1233 bp)
-  new: Tyrosine--tRNA ligase (16177-17392 +, 1215 bp)
+  old: tyrS: tyrosyl-tRNA synthetase (16159-17392 +, 1233 bp)
+  new: tyrS: Tyrosine--tRNA ligase (16177-17392 +, 1215 bp)
 ```
 
 And if a CDS is only in one of the two assemblies, you might see stuff like this:
 ```
-In old but not in new:
+In old but not in new: ABBFA_000019
   Glutathione S-transferase, C-terminal domain protein (24047-24413 +, 366 bp)
 
-In new but not in old:
-  Sodium:neurotransmitter symporter family protein (25765-27244 +, 1479 bp)
+In new but not in old: ABBFA_00087|pgpA
+  pgpA: Phosphatidylglycerophosphatase A (103971-104487 -, 516 bp)
 ```
 
 

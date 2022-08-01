@@ -113,6 +113,15 @@ def print_match(f1, f2, identity, length_diff):
     print_feature_one_line(f1)
     print('  new: ', end='')
     print_feature_one_line(f2)
+    if 'gene' in f1.qualifiers:
+        g1 = f1.qualifiers['gene'][0]
+    else:
+        g1 = ''
+    if 'gene' in f2.qualifiers:
+        g2 = f2.qualifiers['gene'][0]
+    else:
+        g2 = ''
+    gene_str = f" ('{g1}' vs '{g2}')"
     try:
         p1 = f1.qualifiers['product'][0].lower()
     except KeyError:
@@ -122,23 +131,29 @@ def print_match(f1, f2, identity, length_diff):
     except KeyError:
         p2 = 'hypothetical'
     if 'hypothetical' in p1 and 'hypothetical' in p2:
-        print('  still hypothetical')
+        print('  still hypothetical' + gene_str)
     if 'hypothetical' in p1 and 'hypothetical' not in p2:
-        print('  no longer hypothetical')
+        print('  no longer hypothetical' + gene_str)
     if 'hypothetical' not in p1 and 'hypothetical' in p2:
-        print('  became hypothetical')
+        print('  became hypothetical' + gene_str)
 
 
 def print_in_old_not_new(f):
+    g = f.qualifiers['locus_tag'][0]
+    if 'gene' in f.qualifiers.keys():
+        g = '|'.join([g,f.qualifiers['gene'][0]])
     print('')
-    print('In old but not in new:')
+    print('In old but not in new: ' + g)
     print('  ', end='')
     print_feature_one_line(f)
 
 
 def print_in_new_not_old(f):
+    g = f.qualifiers['locus_tag'][0]
+    if 'gene' in f.qualifiers.keys():
+        g = '|'.join([g,f.qualifiers['gene'][0]])
     print('')
-    print('In new but not in old:')
+    print('In new but not in old: ' + g)
     print('  ', end='')
     print_feature_one_line(f)
 
