@@ -113,8 +113,14 @@ def print_match(f1, f2, identity, length_diff):
     print_feature_one_line(f1)
     print('  new: ', end='')
     print_feature_one_line(f2)
-    p1 = f1.qualifiers['product'][0].lower()
-    p2 = f2.qualifiers['product'][0].lower()
+    try:
+        p1 = f1.qualifiers['product'][0].lower()
+    except KeyError:
+        p1 = 'hypothetical'
+    try:
+        p2 = f2.qualifiers['product'][0].lower()
+    except KeyError:
+        p2 = 'hypothetical'
     if 'hypothetical' in p1 and 'hypothetical' in p2:
         print('  still hypothetical')
     if 'hypothetical' in p1 and 'hypothetical' not in p2:
@@ -138,7 +144,14 @@ def print_in_new_not_old(f):
 
 
 def print_feature_one_line(f):
-    f_str = f.qualifiers['product'][0]
+    if 'gene' in f.qualifiers.keys():
+        f_str = f.qualifiers['gene'][0] + ': '
+    else:
+        f_str = ''
+    try:
+        f_str += f.qualifiers['product'][0]
+    except KeyError:
+        f_str += 'hypothetical'
     strand = '+' if f.location.strand == 1 else '-'
     f_str += ' (' + str(f.location.start) + '-' + str(f.location.end) + ' ' + strand + ', '
     f_str += str(f.location.end - f.location.start) + ' bp)'
