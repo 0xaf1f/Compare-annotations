@@ -89,8 +89,6 @@ def main():
                 old_i += old_offset
                 new_i += new_offset
                 break
-        else:
-            sys.exit('\nERROR: Failed to find alignment')
 
         if old_feature is None and new_feature is None:
             break
